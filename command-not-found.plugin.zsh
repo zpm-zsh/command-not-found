@@ -12,4 +12,4 @@ if [[ $PMSPEC != *b* ]] {
   fpath+=( "${0:h}/bin" )
 }
 
-echo This is template
+autoload -Uz command_not_found_handler

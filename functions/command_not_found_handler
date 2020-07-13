@@ -1,0 +1,50 @@
+#!/usr/bin/env zsh
+
+local pkgs cmd="$1"
+
+# Ubuntu/Debian
+if [[ -x /usr/lib/command-not-found ]]; then
+  /usr/lib/command-not-found --no-failure-msg -- "${cmd}"
+  return 127
+fi
+
+# Arch Linux command-not-found support, you must have package pkgfile installed
+# https://wiki.archlinux.org/index.php/Pkgfile#.22Command_not_found.22_hook
+if [[ -x /usr/bin/pkgfile ]]; then
+  pkgs=(${(f)"$(pkgfile -b -v -- "${cmd}" 2>/dev/null)"})
+  
+  if [[ -n "$pkgs" ]]; then
+    printf '%s may be found in the following packages:\n' "${cmd}"
+    printf '  %s\n' $pkgs[@]
+  else
+    printf 'zsh: command not found: %s\n' "${cmd}"
+  fi 1>&2
+
+  return 127
+fi
+
+# Fedora command-not-found support
+if [ -f /usr/libexec/pk-command-not-found ]; then
+  runcnf=1
+
+  [ ! -S /var/run/dbus/system_bus_socket ] && runcnf=0
+  [ ! -x /usr/libexec/packagekitd ] && runcnf=0
+
+  if [ $runcnf -eq 1 ]; then
+    /usr/libexec/pk-command-not-found "${cmd}"
+  fi
+
+  return 127
+fi
+
+# NixOS command-not-found support
+if [ -x /run/current-system/sw/bin/command-not-found ]; then
+  /run/current-system/sw/bin/command-not-found "${cmd}"
+fi
+
+# FIXME
+# OSX command-not-found support
+# https://github.com/Homebrew/homebrew-command-not-found
+if [[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]; then
+    source '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
+fi

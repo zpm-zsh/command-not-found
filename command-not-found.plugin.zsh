@@ -8,8 +8,4 @@ if [[ $PMSPEC != *f* ]] {
   fpath+=( "${0:h}/functions" )
 }
 
-if [[ $PMSPEC != *b* ]] {
-  fpath+=( "${0:h}/bin" )
-}
-
 autoload -Uz command_not_found_handler

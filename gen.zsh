@@ -45,4 +45,6 @@ if [[ -x /data/data/com.termux/files/usr/libexec/termux/command-not-found  ]]; t
   }' >! "${COMMAND_NOT_FOUND_CACHE_FILE}"
 fi
 
+touch "${COMMAND_NOT_FOUND_CACHE_FILE}"
+
 source "${COMMAND_NOT_FOUND_CACHE_FILE}"

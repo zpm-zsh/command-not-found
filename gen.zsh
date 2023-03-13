@@ -1,4 +1,6 @@
-mkdir -p "${TMPDIR:-/tmp}/zsh-${UID}"
+ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${TMPDIR:-/tmp}/zsh-${UID:-user}}"
+
+mkdir -p "${ZSH_CACHE_DIR}"
 
 for file (
   /usr/share/doc/pkgfile/command-not-found.zsh

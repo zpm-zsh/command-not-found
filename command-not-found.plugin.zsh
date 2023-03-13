@@ -1,4 +1,5 @@
-COMMAND_NOT_FOUND_CACHE_FILE="${TMPDIR:-/tmp}/zsh-${UID}/command-not-found.zsh"
+ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${TMPDIR:-/tmp}/zsh-${UID:-user}}"
+COMMAND_NOT_FOUND_CACHE_FILE="${ZSH_CACHE_DIR}/command-not-found.zsh"
 
 source "${COMMAND_NOT_FOUND_CACHE_FILE}" 2>/dev/null || {
   # Standarized $0 handling, following:

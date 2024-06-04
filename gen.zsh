@@ -32,7 +32,8 @@ if [[ -x /usr/libexec/pk-command-not-found   ]]; then
 if [[ -S /var/run/dbus/system_bus_socket && -x /usr/libexec/packagekitd ]]; then
 /usr/libexec/pk-command-not-found "$@"
 return $?
-  fi' >! "${COMMAND_NOT_FOUND_CACHE_FILE}"
+  fi
+  }' >! "${COMMAND_NOT_FOUND_CACHE_FILE}"
 fi
 
 if [[ -x /run/current-system/sw/bin/command-not-found   ]]; then
